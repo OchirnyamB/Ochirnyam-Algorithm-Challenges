@@ -1,0 +1,33 @@
+Given a binary search tree, write a function kthSmallest to find the kth smallest element in it.
+
+Note: 
+You may assume k is always valid, 1 ≤ k ≤ BST's total elements.
+
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+    public int kthSmallest(TreeNode root, int k) {
+       // Do a inorder traversal and return the Kth element in that traversal
+       List<Integer> temp = new ArrayList<>();
+       Stack<TreeNode> left = new Stack<>();
+       while(root != null || !left.empty()){
+           if(root!=null){
+               left.push(root);
+               root = root.left;
+           }
+           else{
+               root = left.pop();
+               temp.add(root.val);
+               root = root.right;
+           }
+       }
+       return temp.get(k-1);
+    }
+}
