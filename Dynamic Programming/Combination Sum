@@ -1,5 +1,5 @@
 Given a set of candidate numbers (candidates) (without duplicates) and a target number (target), 
-find the total of number of unique combinations in candidates where the candidate numbers sums to target.
+find all the number of unique combinations in candidates where the candidate numbers sums to target.
 
 The same repeated number may be chosen from candidates unlimited number of times.
 
@@ -16,18 +16,19 @@ A solution set is:
   [3,1]
 ]
 
-Output = 7
 
-class Solution {
-    public int combinationSum(int[] arr, int N) {
-        int [] dp = new int[N+1];
-        dp[0] = 1;
-        for(int i=1; i <= N; i++){
-            for(int j : arr){
-               if(i-j >= 0)
-                  dp[i] += dp[i-j];
-            }
-        }
-        return dp[N];
-    }
-}
+class Solution(object):
+    def combinationSum(self, candidate, target):
+        """
+        :type candidates: List[int]
+        :type target: int
+        :rtype: List[List[int]]
+        """
+        dp = [[] for i in range(target+1)]
+        for j in candidate:
+            for i in range(j, target+1):
+                if i == j:
+                    dp[i].append([j])
+                elif i-j > 0:
+                    dp[i] += [s + [j] for s in dp[i-j]]
+        return dp[target]
